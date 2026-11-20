@@ -113,6 +113,7 @@ Tarayıcınızdan açın:
 ├── beyin_val.jsonl                # Beyin doğrulama seti (897 kayıt)
 ├── Goz_Egitim_Seti/               # Göz eğitim seti (8.016 satır görseli ve jsonl)
 ├── requirements.txt               # Gerekli Python bağımlılıkları
+├── LICENSE                        # MIT Lisansı
 └── .gitignore                     # Git tarafından göz ardı edilecek dosyalar
 ```
 
@@ -120,4 +121,4 @@ Tarayıcınızdan açın:
 
 ## ⚖️ Lisans
 
-Bu proje araştırma ve eğitim amaçlı geliştirilmiştir.
+Bu proje [MIT Lisansı](file:///c:/Users/ensar/Desktop/ottoman/LICENSE) ile lisanslanmıştır. Detaylı bilgi için [LICENSE](file:///c:/Users/ensar/Desktop/ottoman/LICENSE) dosyasını inceleyebilirsiniz.
