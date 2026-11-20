@@ -1,6 +1,6 @@
-# Çapa AI — Uçtan Uca Osmanlıca Araştırma Asistanı 📜✨
+# Cevdet Translate — Uçtan Uca Osmanlıca Araştırma Asistanı 📜✨
 
-**Çapa AI**, matbu Osmanlıca belgeleri satır satır veya tam sayfa olarak görselden okuyan (**Göz / OCR**) ve bağlama uygun şekilde doğrudan günümüz modern Türkçesine çeviren (**Beyin / LLM**) iki aşamalı hibrit bir yapay zeka araştırma asistanıdır.
+**Cevdet Translate**, matbu Osmanlıca belgeleri satır satır veya tam sayfa olarak görselden okuyan (**Göz / OCR**) ve bağlama uygun şekilde doğrudan günümüz modern Türkçesine çeviren (**Beyin / LLM**) iki aşamalı hibrit bir yapay zeka araştırma asistanıdır.
 
 ---
 
