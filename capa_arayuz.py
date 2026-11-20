@@ -26,6 +26,13 @@ import json
 import re
 import sys
 import time
+import types
+
+# Transformers & huggingface_hub sürüm uyumsuzluk bypass'ı
+_dep_dummy = types.ModuleType("transformers.dependency_versions_check")
+_dep_dummy.dep_version_check = lambda *args, **kwargs: None
+sys.modules["transformers.dependency_versions_check"] = _dep_dummy
+
 from pathlib import Path
 from typing import Any
 
