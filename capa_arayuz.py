@@ -431,7 +431,7 @@ HTML_PAGE = r"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Çapa AI — Osmanlıca Araştırma Asistanı (Göz + Beyin)</title>
+<title>Cevdet-Translate v1.0 — Osmanlıca Yapay Zekâ Çeviri Platformu</title>
 <style>
   :root {
     --bg: #0d1117;
@@ -714,10 +714,10 @@ HTML_PAGE = r"""<!DOCTYPE html>
 <body>
 <header>
   <div class="brand">
-    <div class="brand-badge">Ç</div>
+    <div class="brand-badge">C</div>
     <div>
-      <h1>Çapa — Osmanlıca Okuma ve Çeviri Asistanı</h1>
-      <p>Yapay zekâ ile matbu Osmanlıca metinleri okuma ve günümüz Türkçesine çevirme platformu</p>
+      <h1>Cevdet-Translate <span style="font-size:13px;color:var(--blue);font-weight:600;margin-left:6px">v1.0.0</span></h1>
+      <p>Yapay zekâ ile matbu Osmanlıca belgeleri okuma ve günümüz modern Türkçesine çevirme platformu</p>
     </div>
   </div>
   <div class="status-pills">
