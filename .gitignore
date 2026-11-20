@@ -1,0 +1,33 @@
+# Python & Environments
+venv/
+.venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Logs & Runtime State
+*.log
+.uretim.lock
+
+# Heavy AI Model Weights (>100MB cannot be pushed to standard GitHub repos)
+# Checkpoints & model weights should be stored on HuggingFace Hub or local disk
+Capa_Goz_TrOCR/
+Capa_Beyin_Qwen25_LoRA/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+
+# IDE & System Files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

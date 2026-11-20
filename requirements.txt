@@ -1,0 +1,15 @@
+torch>=2.2.0
+transformers>=4.48.0
+accelerate>=1.0.0
+peft>=0.14.0
+trl>=0.14.0
+bitsandbytes>=0.45.0
+datasets>=3.0.0
+jiwer>=3.0.0
+pillow>=10.0.0
+opencv-python>=4.9.0
+fastapi>=0.115.0
+uvicorn>=0.32.0
+pydantic>=2.10.0
+huggingface-hub>=0.28.0
+numpy>=1.26.0
