@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo.svg" alt="Cevdet-Translate Logo" width="100%" />
+<img src="assets/logo.png" alt="Cevdet-Translate Logo" width="100%" style="border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,0.5);" />
 
 # Cevdet-Translate 📜✨
 ### Matbu Osmanlıca Belgeler İçin Uçtan Uca Yapay Zekâ Okuma ve Çeviri Platformu

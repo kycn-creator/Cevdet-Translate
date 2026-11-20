@@ -43,6 +43,7 @@ import torch
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from peft import PeftModel
 from PIL import Image, ImageOps
 from pydantic import BaseModel
@@ -67,7 +68,8 @@ SYSTEM_PROMPT = (
     "çeviren uzman bir tarih ve dil asistanısın."
 )
 
-app = FastAPI(title="Çapa AI — Osmanlıca Araştırma Asistanı")
+app = FastAPI(title="Cevdet-Translate v1.0 — Osmanlıca Yapay Zekâ Çeviri Platformu")
+app.mount("/assets", StaticFiles(directory=str(BASE_DIR / "assets")), name="assets")
 
 
 class EngineState:
@@ -714,7 +716,7 @@ HTML_PAGE = r"""<!DOCTYPE html>
 <body>
 <header>
   <div class="brand">
-    <div class="brand-badge">C</div>
+    <img src="/assets/logo.png" alt="Cevdet-Translate Logo" style="width:52px;height:52px;border-radius:12px;object-fit:cover;border:1.5px solid var(--gold);box-shadow:0 0 16px rgba(212,168,83,0.35)" />
     <div>
       <h1>Cevdet-Translate <span style="font-size:13px;color:var(--blue);font-weight:600;margin-left:6px">v1.0.0</span></h1>
       <p>Yapay zekâ ile matbu Osmanlıca belgeleri okuma ve günümüz modern Türkçesine çevirme platformu</p>
