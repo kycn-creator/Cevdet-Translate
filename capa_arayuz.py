@@ -495,6 +495,7 @@ HTML_PAGE = r"""<!DOCTYPE html>
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    align-items: center;
   }
   .pill {
     font-size: 12px;
@@ -503,8 +504,36 @@ HTML_PAGE = r"""<!DOCTYPE html>
     padding: 6px 12px;
     border-radius: 999px;
     color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
   .pill strong { color: var(--gold); }
+  .beta-badge {
+    background: var(--gold);
+    color: #0d1117;
+    font-weight: 800;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  .beta-banner {
+    background: rgba(212, 168, 83, 0.08);
+    border: 1px solid rgba(212, 168, 83, 0.35);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13.5px;
+  }
+  .beta-banner-icon {
+    font-size: 22px;
+    line-height: 1;
+  }
   .container {
     max-width: 1320px;
     margin: 24px auto;
@@ -687,42 +716,48 @@ HTML_PAGE = r"""<!DOCTYPE html>
   <div class="brand">
     <div class="brand-badge">Ç</div>
     <div>
-      <h1>Çapa AI — Osmanlıca Araştırma Asistanı</h1>
-      <p>Faz 2: Göz (TrOCR Görsel Okuma) &bull; Faz 3: Beyin (Qwen-2.5 QLoRA Anlamlandırma &amp; Günümüz Türkçesi)</p>
+      <h1>Çapa — Osmanlıca Okuma ve Çeviri Asistanı</h1>
+      <p>Yapay zekâ ile matbu Osmanlıca metinleri okuma ve günümüz Türkçesine çevirme platformu</p>
     </div>
   </div>
   <div class="status-pills">
-    <div class="pill"><strong>Göz OCR:</strong> %87.83 Harf Doğruluğu</div>
-    <div class="pill"><strong>Beyin QLoRA:</strong> %85.02 Token Doğruluğu</div>
-    <div class="pill"><strong>Sözlük:</strong> <span id="dictCount">9.965</span> Madde</div>
+    <div class="pill"><span class="beta-badge">BETA</span> <strong>Test Sürümü</strong></div>
+    <div class="pill"><strong>Sözlük Kapsamı:</strong> <span id="dictCount">9.965</span> Kelime</div>
   </div>
 </header>
 
 <div class="container">
+  <div class="beta-banner">
+    <span class="beta-banner-icon">🧪</span>
+    <div>
+      <strong>Sistem Geliştirme ve Test Aşamasındadır:</strong> Çıktılar araştırma amaçlı üretilmektedir. Belgenin matbu netliği, yıpranma durumu ve çözünürlüğe bağlı olarak okuma ve çeviri farklılıkları oluşabilir.
+    </div>
+  </div>
+
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('ocr')">1. Görselden Okuma &amp; Çeviri (Göz + Beyin)</button>
-    <button class="tab-btn" onclick="switchTab('translate')">2. Osmanlıca Metin Çevirisi (Sadece Beyin)</button>
-    <button class="tab-btn" onclick="switchTab('dict')">3. Osmanlıca Sözlük &amp; Kelime Tahlili</button>
+    <button class="tab-btn active" onclick="switchTab('ocr')">1. Görselden Oku ve Çevir</button>
+    <button class="tab-btn" onclick="switchTab('translate')">2. Metin Çevirisi</button>
+    <button class="tab-btn" onclick="switchTab('dict')">3. Osmanlıca Sözlük</button>
   </div>
 
   <!-- SEKME 1: GÖRSEL OCR + ÇEVİRİ -->
   <div id="tab-ocr" class="tab-panel active">
     <div class="grid-2">
       <div class="card">
-        <h2>Belge veya Satır Görseli Yükle</h2>
+        <h2>Belge Görseli Yükle</h2>
         <div id="dropzone" class="dropzone" onclick="document.getElementById('fileInput').click()">
-          <strong>Görsel Seçmek İçin Tıklayın, Sürükleyin veya Ctrl+V ile Yapıştırın</strong>
-          <p>Tek satır küpürü veya çok satırlı tam sayfa matbu Osmanlıca belge (.jpg, .png, .webp)</p>
+          <strong>Görsel Seçmek İçin Tıklayın, Sürükleyin veya Yapıştırın</strong>
+          <p>Tek satır veya çok satırlı matbu Osmanlıca gazete/kitap sayfası (.jpg, .png, .webp)</p>
           <input id="fileInput" type="file" accept="image/*" style="display:none" onchange="handleFile(this.files[0])" />
         </div>
 
         <div class="controls">
           <select id="ocrMode" style="flex:1">
-            <option value="auto">Otomatik Algıla (Tek Satır / Tam Sayfa)</option>
-            <option value="single_line">Tek Satır Modu (Bölmeden Doğrudan Oku)</option>
-            <option value="full_page">Tam Sayfa / Çoklu Satır Modu (OpenCV Satır Dilimleyici)</option>
+            <option value="auto">Otomatik Algıla (Tek Satır veya Tam Sayfa)</option>
+            <option value="single_line">Tek Satır Belge</option>
+            <option value="full_page">Çok Satırlı / Tam Sayfa Belge</option>
           </select>
-          <button id="runOcrBtn" class="btn" onclick="runOCR()">Göz ile Oku &amp; Beyin ile Çevir</button>
+          <button id="runOcrBtn" class="btn" onclick="runOCR()">Metni Oku ve Çevir</button>
         </div>
 
         <div class="preview-box" id="previewBox" style="display:none">
@@ -730,7 +765,7 @@ HTML_PAGE = r"""<!DOCTYPE html>
         </div>
 
         <div class="samples-bar">
-          <h3>Hazır Test Seti Örnekleri (Modelin Eğitimde Hiç Görmediği Satırlar — Tek Tıkla Test Et):</h3>
+          <h3>Hızlı Deneme İçin Örnek Satırlar:</h3>
           <div id="sampleList" class="sample-list"></div>
         </div>
       </div>
@@ -743,7 +778,7 @@ HTML_PAGE = r"""<!DOCTYPE html>
 
         <div id="gtBlock" class="result-block" style="display:none">
           <div class="result-label label-gt">
-            <span>Gerçek Metin (Ground Truth)</span>
+            <span>Referans Metin</span>
             <span id="accBadge"></span>
           </div>
           <div id="gtText" class="result-text"></div>
@@ -751,14 +786,14 @@ HTML_PAGE = r"""<!DOCTYPE html>
 
         <div class="result-block">
           <div class="result-label label-goz">
-            <span>1. GÖZ (TrOCR) — Latin Harfli Osmanlıca Okunuşu</span>
+            <span>1. Belgeden Okunan Metin (Osmanlıca / Transkripsiyon)</span>
           </div>
-          <div id="gozText" class="result-text" style="color:#c9d1d9">Henüz bir görsel okutulmadı. Soldan bir örnek seçin veya görsel yükleyin.</div>
+          <div id="gozText" class="result-text" style="color:#c9d1d9">Henüz bir görsel yüklenmedi. Soldaki alandan görsel seçebilir veya hazır örnekleri deneyebilirsiniz.</div>
         </div>
 
         <div class="result-block">
           <div class="result-label label-beyin">
-            <span>2. BEYİN (Qwen-2.5 QLoRA) — Günümüz Türkçesi Çevirisi</span>
+            <span>2. Günümüz Türkçesi Çevirisi</span>
           </div>
           <div id="beyinText" class="result-text" style="color:#a5d6ff">...</div>
         </div>
@@ -768,14 +803,14 @@ HTML_PAGE = r"""<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- SEKME 2: SADECE BEYİN METİN ÇEVİRİSİ -->
+  <!-- SEKME 2: METİN ÇEVİRİSİ -->
   <div id="tab-translate" class="tab-panel">
     <div class="grid-2">
       <div class="card">
-        <h2>Latin Harfli Osmanlıca Metin</h2>
-        <textarea id="rawOttomanInput" rows="7" placeholder="Örn: Bu şüphe ve tereddütleri izale edecek izahât ve beyanâtta bulunduktan sonra..."></textarea>
+        <h2>Osmanlıca / Eski Türkçe Metin</h2>
+        <textarea id="rawOttomanInput" rows="7" placeholder="Çevirmek istediğiniz Osmanlıca veya eski Türkçe metni buraya yazın veya yapıştırın..."></textarea>
         <div class="controls">
-          <button id="runTransBtn" class="btn" onclick="runTranslate()">Günümüz Türkçesine Çevir (Beyin)</button>
+          <button id="runTransBtn" class="btn" onclick="runTranslate()">Günümüz Türkçesine Çevir</button>
         </div>
       </div>
       <div class="card">
@@ -784,7 +819,7 @@ HTML_PAGE = r"""<!DOCTYPE html>
           <span id="transTiming" style="font-size:12px;color:var(--muted)"></span>
         </h2>
         <div class="result-block">
-          <div id="transOutput" class="result-text">Çeviri burada görünecek...</div>
+          <div id="transOutput" class="result-text">Çeviri burada görünecektir...</div>
         </div>
       </div>
     </div>
@@ -793,10 +828,10 @@ HTML_PAGE = r"""<!DOCTYPE html>
   <!-- SEKME 3: SÖZLÜK -->
   <div id="tab-dict" class="tab-panel">
     <div class="card">
-      <h2>Osmanlıca Kelime veya Tamlama Sorgula (9.965 Maddelik Sözlük + Beyin)</h2>
+      <h2>Osmanlıca Kelime Arama</h2>
       <div class="controls" style="margin-bottom:18px">
-        <input id="dictInput" type="text" placeholder="Örn: müstelzim, ferzend, şerâit, teessüf, paymâl..." style="flex:1" onkeydown="if(event.key==='Enter') runDict()" />
-        <button class="btn" onclick="runDict()">Sorgula</button>
+        <input id="dictInput" type="text" placeholder="Aramak istediğiniz kelimeyi yazın (Örn: müstelzim, ferzend, şerâit, teessüf, paymâl)..." style="flex:1" onkeydown="if(event.key==='Enter') runDict()" />
+        <button class="btn" onclick="runDict()">Ara</button>
       </div>
       <div id="dictResult"></div>
     </div>
@@ -881,8 +916,8 @@ async function runOCR() {
   const btn = document.getElementById('runOcrBtn');
   btn.disabled = true;
   btn.textContent = 'Okunuyor ve Çevriliyor...';
-  document.getElementById('gozText').textContent = 'Göz (TrOCR) satırları okuyor...';
-  document.getElementById('beyinText').textContent = 'Beyin (Qwen-2.5) günümüz Türkçesine çeviriyor...';
+  document.getElementById('gozText').textContent = 'Belgedeki satırlar okunuyor...';
+  document.getElementById('beyinText').textContent = 'Günümüz Türkçesine çevriliyor...';
 
   try {
     const mode = document.getElementById('ocrMode').value;
@@ -904,7 +939,7 @@ async function runOCR() {
     if (data.lines.length === 1 && data.lines[0].ground_truth) {
       document.getElementById('gtBlock').style.display = 'block';
       document.getElementById('gtText').textContent = data.lines[0].ground_truth;
-      document.getElementById('accBadge').textContent = `Harf Doğruluğu: %${data.lines[0].accuracy}`;
+      document.getElementById('accBadge').textContent = `Örnek Doğruluğu: %${data.lines[0].accuracy}`;
     } else {
       document.getElementById('gtBlock').style.display = 'none';
     }
@@ -918,7 +953,7 @@ async function runOCR() {
         div.innerHTML = `
           <div style="font-size:12px;color:var(--gold);font-weight:700;margin-bottom:4px">Satır #${ln.index}</div>
           <img src="${ln.crop_b64}" />
-          <div style="font-size:14px;color:#c9d1d9"><strong>Osmanlıca:</strong> ${ln.ottoman}</div>
+          <div style="font-size:14px;color:#c9d1d9"><strong>Okunan Metin:</strong> ${ln.ottoman}</div>
           <div style="font-size:14px;color:#a5d6ff;margin-top:4px"><strong>Günümüz Türkçesi:</strong> ${ln.modern}</div>
         `;
         lc.appendChild(div);
@@ -926,7 +961,7 @@ async function runOCR() {
     }
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Göz ile Oku & Beyin ile Çevir';
+    btn.textContent = 'Metni Oku ve Çevir';
   }
 }
 
@@ -963,20 +998,20 @@ async function runDict() {
   const data = await res.json();
   let html = `
     <div class="result-block">
-      <div class="result-label label-beyin"><span>Beyin (Yapay Zeka) Anlamlandırması</span><span>${data.elapsed_sec} sn</span></div>
+      <div class="result-label label-beyin"><span>Yapay Zekâ Anlamlandırması</span><span>${data.elapsed_sec} sn</span></div>
       <div class="result-text">${data.ai_meaning}</div>
     </div>
   `;
   if (data.exact_match) {
     html += `
       <div class="result-block">
-        <div class="result-label label-gt"><span>Sözlük Tam Eşleşme (${data.query})</span></div>
+        <div class="result-label label-gt"><span>Sözlük Anlamı (${data.query})</span></div>
         <div class="result-text">${data.exact_match}</div>
       </div>
     `;
   }
   if (data.matches && data.matches.length) {
-    html += `<div class="result-block"><div class="result-label label-goz"><span>İlgili Sözlük Maddeleri</span></div>`;
+    html += `<div class="result-block"><div class="result-label label-goz"><span>İlgili Sözlük Kelimeleri</span></div>`;
     data.matches.forEach(m => {
       html += `<div style="padding:6px 0;border-bottom:1px solid var(--border)"><strong>${m.word}:</strong> ${m.meaning}</div>`;
     });
